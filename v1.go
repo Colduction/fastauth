@@ -74,7 +74,7 @@ func (version1) DecryptFromB64Raw(input string, key []byte) []byte {
 }
 
 // Decrypt cipher then unmarshal it to v struct
-func (version1) Unmarshal(input, key []byte, v *interface{}) error {
+func (version1) Unmarshal(input, key []byte, v interface{}) error {
 	if len(input) == 0 || len(key) == 0 {
 		return NewInvalidInputErr(V1.Unmarshal)
 	}
@@ -83,7 +83,7 @@ func (version1) Unmarshal(input, key []byte, v *interface{}) error {
 }
 
 // Marshal v struct then encrypt it to cipher
-func (version1) Marshal(v *interface{}, key []byte) ([]byte, error) {
+func (version1) Marshal(v interface{}, key []byte) ([]byte, error) {
 	data, err := json.Marshal(v)
 	if err != nil {
 		return nil, err

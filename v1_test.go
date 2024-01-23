@@ -76,7 +76,7 @@ func BenchmarkV1DecryptFromB64(b *testing.B) {
 	})
 }
 
-// V1.ValidateString
+// V1.Checksum
 func BenchmarkV1Checksum(b *testing.B) {
 	benchPerCoreConfigs(b, func(b *testing.B) {
 		b.RunParallel(func(b *testing.PB) {
@@ -98,7 +98,7 @@ func BenchmarkV1SerializeToString(b *testing.B) {
 	})
 }
 
-// V1.ValidateChecksum
+// V1.Validate
 func BenchmarkV1Validate(b *testing.B) {
 	benchPerCoreConfigs(b, func(b *testing.B) {
 		b.RunParallel(func(b *testing.PB) {
