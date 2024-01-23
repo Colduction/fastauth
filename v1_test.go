@@ -25,7 +25,11 @@ var (
 	pt []byte = []byte("[i] PlainText")
 	pk []byte = []byte("PassKey")
 
-	b64_ct string = "W2mZ3k5iQWmIklF2dA"
+	b64_c      []byte = []byte("W2mZ3k5iQWmIklF2dA")
+	salt       []byte = []byte("salt")
+	b64_ct     string = "W2mZ3k5iQWmIklF2dA"
+	crc        string = "624b9023"
+	serialized string = "[80,97,115,115,75,101,121]:624b9023:W2mZ3k5iQWmIklF2dA"
 )
 
 // V1.Encrypt
@@ -67,6 +71,50 @@ func BenchmarkV1DecryptFromB64(b *testing.B) {
 		b.RunParallel(func(b *testing.PB) {
 			for b.Next() {
 				_ = fastauth.V1.DecryptFromB64Raw(b64_ct, pk)
+			}
+		})
+	})
+}
+
+// V1.ValidateString
+func BenchmarkV1Checksum(b *testing.B) {
+	benchPerCoreConfigs(b, func(b *testing.B) {
+		b.RunParallel(func(b *testing.PB) {
+			for b.Next() {
+				_, _ = fastauth.V1.Checksum(pk, b64_c, salt)
+			}
+		})
+	})
+}
+
+// V1.SerializeToString
+func BenchmarkV1SerializeToString(b *testing.B) {
+	benchPerCoreConfigs(b, func(b *testing.B) {
+		b.RunParallel(func(b *testing.PB) {
+			for b.Next() {
+				_, _ = fastauth.V1.SerializeToString(b64_c, pk, salt)
+			}
+		})
+	})
+}
+
+// V1.ValidateChecksum
+func BenchmarkV1Validate(b *testing.B) {
+	benchPerCoreConfigs(b, func(b *testing.B) {
+		b.RunParallel(func(b *testing.PB) {
+			for b.Next() {
+				_ = fastauth.V1.Validate(crc, b64_c, pk, salt)
+			}
+		})
+	})
+}
+
+// V1.ValidateSerialized
+func BenchmarkV1ValidateSerialized(b *testing.B) {
+	benchPerCoreConfigs(b, func(b *testing.B) {
+		b.RunParallel(func(b *testing.PB) {
+			for b.Next() {
+				_ = fastauth.V1.ValidateSerialized(serialized, salt)
 			}
 		})
 	})

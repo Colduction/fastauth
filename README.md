@@ -16,12 +16,16 @@ Use `go get -u`.
 
 1. **Version 1 (V1)**:
     - XOR encryption with small changes
+        - `Checksum`
         - `Decrypt`
         - `DecryptFromB64Raw`
         - `Encrypt`
         - `EncryptToB64Raw`
         - `Marshal`
+        - `Serialize`
         - `Unmarshal`
+        - `Validate`
+        - `ValidateSerialized`
 
 ## Contribute
 
